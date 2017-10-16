@@ -1,0 +1,113 @@
+<html>
+<head>
+  <script src="https://d3js.org/d3.v4.min.js"></script>
+  <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"/>
+  <style>
+    div.tooltip {  
+      position: absolute;      
+      text-align: center;      
+      width: 60px;          
+      height: 28px;          
+      padding: 2px;        
+      font: 12px sans-serif;    
+      background: lightsteelblue;  
+      border: 0px;    
+      border-radius: 8px;      
+      pointer-events: none;      
+    }
+  </style>
+</head>
+<body>
+<svg width="500" height="500">
+
+</svg>
+<script>
+
+// Define the div for the tooltip
+var div = d3.select("body").append("div")  
+    .attr("class", "tooltip")        
+    .style("opacity", 0);
+
+/*const data = ['one', 'two', 'three'];
+d3.select('#root').selectAll('div.thing')
+    .data(data)
+  .enter().append('div')
+    .classed('thing', true)
+    .text(d => d)*/
+d3.select("body").style("background-color", "black");
+
+var data = [
+  {x:0,y:0, width: 48, height:30, name: 'AAPL', pct: .34},
+  {x:50,y:0, width: 48, height:30, name: 'MO', pct: .89},
+  {x:100,y:0, width: 48, height:30, name: 'V', pct: .89},
+  {x:150,y:0, width: 48, height:30, name: 'IBM', pct: .89},
+  {x:200,y:0, width: 48, height:30, name: 'MSFT', pct: .89},
+  {x:250,y:0, width: 48, height:30, name: 'A', pct: .89},
+  {x:300,y:0, width: 48, height:30, name: 'CITI', pct: .89},
+  {x:350,y:0, width: 48, height:30, name: 'GM', pct: .89}
+
+];
+
+// the svg container
+var svgContainer = d3.select('svg');
+
+// append groups to the svg container
+var symbolGroups =
+  svgContainer
+  .selectAll('g')
+  .data(data)
+  .enter()
+  .append('g');
+
+symbolGroups
+  .append('rect')
+  .attr('width', d => d.width)
+  .attr('height', d => d.height)
+  .attr('x', d => d.x)
+  .attr('y', d => d.y)
+  .attr('fill', 'red');
+
+symbolGroups
+  .append('rect')
+  .attr('width', d => d.width * d.pct)
+  .attr('height', d => d.height)
+  .attr('x', d => d.x)
+  .attr('y', d => d.y)
+  .attr('fill', 'limegreen');
+
+symbolGroups
+  .append('text')
+  .attr('text-anchor', 'middle')
+  .attr('x', d => d.x + d.width / 2)
+  .attr('y', d => d.y + d.height /2 + 4)
+  .attr('font-family', "Roboto")
+  .attr('fill', 'white')
+  .text(d => d.name);
+
+symbolGroups
+  .append('rect')
+  .attr('width', d => d.width * d.pct)
+  .attr('height', d => d.height)
+  .attr('x', d => d.x)
+  .attr('y', d => d.y)
+  .attr('opacity', 0)
+  .style("cursor", 'pointer')
+  .on("mouseover", function(d) {    
+      div.transition()    
+	  .duration(200)    
+	  .style("opacity", .9);    
+      div.html(formatTime(d.date) + "<br/>"  + d.close)  
+	  .style("left", (d3.event.pageX) + "px")    
+	  .style("top", (d3.event.pageY - 28) + "px");  
+      })          
+  .on("mouseout", function(d) {    
+      div.transition()    
+	  .duration(500)    
+	  .style("opacity", 0);  
+
+;
+
+
+</script>
+</body>
+</html>

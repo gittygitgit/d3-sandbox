@@ -1,0 +1,14 @@
+div .tooltip {  
+    position: absolute;      
+    text-align: center;      
+    width: 120px;          
+    height: 40px;  
+    color: white;        
+    padding: 6px;        
+    font: 14px Roboto;    
+    background: black;  
+    border: 0px;    
+    border-radius: 4px;      
+    pointer-events: none;      
+}
+
