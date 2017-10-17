@@ -71,12 +71,13 @@ export default class Simple extends Component {
       .style("cursor", 'pointer')
       .on("mouseover", function(d) {    
          console.log("event [x=%s, y=%s]", event.pageX, event.pageY);
+         console.log(event);
          div.transition()    
 	   .duration(200)    
 	   .style("opacity", .7);    
 	 div.html(d.name + " [" + d.pct + "% open]")  
-	   .style("left", event.pageX + "px")    
-	   .style("top", event.pageY + "px");  
+	   .style("left", event.offsetX+ "px")    
+	   .style("top", event.offsetY+ "px");  
       })          
       .on("mouseout", function(d) {    
         div.transition()    
@@ -116,10 +117,12 @@ export default class Simple extends Component {
    render() {
       return (
         <div>
-	  <svg ref={node => this.node = node}
-	    width={500} height={500}>
+        <div style={{position:'relative', height: '500px', overflowY: 'scroll', width: '500px'}}>
+	  <svg ref={node => this.node = node} 
+	    style={{backgroundColor: 'blue'}} height="1600">
 	  </svg>
           <div className="tooltip" style={{opacity: 0}}/>
+        </div>
         </div>
       );
    }
