@@ -13,6 +13,7 @@
   "dependencies": {
     "d3": "^4.11.0",
     "d3-shape": "^1.2.0",
+    "nasdaq-td-web": "file:///Users/grudkowm/Documents/repositories/nasdaq-td-web/nasdaq-td-web-1.0.0.tgz",
     "prop-types": "^15.6.0",
     "react": "^15.6.2",
     "react-dom": "^15.6.2",
