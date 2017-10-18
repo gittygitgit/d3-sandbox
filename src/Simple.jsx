@@ -13,6 +13,7 @@ export default class Simple extends Component {
     this.createSimple()
   }
   componentDidUpdate() {
+    console.log(this.props.data)
     this.createSimple()
   }
   createSimple() {
@@ -117,9 +118,9 @@ export default class Simple extends Component {
    render() {
       return (
         <div>
-        <div style={{position:'relative', height: '500px', overflowY: 'scroll', width: '500px'}}>
+        <div style={{position:'relative', height: '500px', overflowY: 'scroll', width: '800px'}}>
 	  <svg ref={node => this.node = node} 
-	    style={{backgroundColor: 'blue'}} height="1600">
+	    style={{backgroundColor: 'blue'}} height="13600" width="800">
 	  </svg>
           <div className="tooltip" style={{opacity: 0}}/>
         </div>
