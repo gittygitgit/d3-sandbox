@@ -1,0 +1,74 @@
+<html>
+<head>
+<script src="https://d3js.org/d3.v4.min.js"></script>
+
+</head>
+<body>
+
+<table>
+  <thead>
+    <tr><td>  A</td><td>  B</td><td>  C</td><td>  D</td></tr>
+  </thead>
+  <tbody>
+    <tr><td>  0</td><td>  1</td><td>  2</td><td>  3</td></tr>
+    <tr><td>  4</td><td>  5</td><td>  6</td><td>  7</td></tr>
+    <tr><td>  8</td><td>  9</td><td> 10</td><td> 11</td></tr>
+    <tr><td> 12</td><td> 13</td><td> 14</td><td> 15</td></tr>
+  </tbody>
+</table>
+<svg/>
+
+<script>
+var matrix = [
+  [ 0,  1,  2,  3],
+  [ 4,  5,  6,  7],
+  [ 8,  9, 10, 11],
+  [12, 13, 14, 15],
+];
+
+/*var td = d3.selectAll("tbody tr").selectAll("td");
+td.style("color", function(d, i) { return i % 2 == 0 ? null : "red"; });
+*/
+
+function update(data) {
+  var container = d3.select("svg");
+
+  var g = container.selectAll("g").data(data);
+
+  var rectpct = container.selectAll("g").selectAll("rect.pct").data(data);
+
+  g
+    .enter()
+    .append("g")
+    .append("rect")
+    .classed("pct", true)
+    .attr("width", d => d.width * d.pct)
+    .attr("height", d => d.height)
+    .attr("x", d => d.x)
+    .attr("y", d => d.y)
+    .attr('fill', 'yellow')
+    .merge(g)
+    .selectAll("rect.pct")
+    .attr("width", d => d.width * d.pct);
+    
+}
+ 
+var body = d3.select("body").selectAll("p").data(matrix);
+body.enter().append("p").text(function(d, i) { return "hello" + i});
+
+symbols = [{x:0, y:0, width:48, height:48, pct:Math.random(),name: "AAPL"}];
+
+update(symbols);
+ 
+function shake() {
+  symbols = [{x:0, y:0, width:48, height:48, pct:Math.random(),name: "AAPL"}];
+  update(symbols);
+    
+}
+
+var timer = setInterval(
+  shake, 1000);
+</script>
+<button onClick="shake()"/>
+</body>
+</html>
