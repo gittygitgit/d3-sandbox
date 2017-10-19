@@ -22,7 +22,7 @@ export default class SimpleTest extends React.Component {
     
     var x = 0;
     var y = 0;
-    var width = 48;
+    var width = 60;
     var height = 30;
     //var viewportWidth = 900;
     //var viewportHeight = 500;
@@ -45,7 +45,7 @@ export default class SimpleTest extends React.Component {
       this.setState({
         data: this.data()
       });
-    }, 1000);
+    }, 2000);
 
   }
   render() {
@@ -54,7 +54,7 @@ export default class SimpleTest extends React.Component {
    }
    return (
       <div>
-	<Simple data={this.state.data}  />
+	<Simple data={this.state.data}  height={10000} width={770}/>
       </div>
     )
   }

@@ -1,10 +1,10 @@
 div .tooltip {  
     position: absolute;      
     text-align: center;      
-    width: 120px;          
-    height: 40px;  
+    width: 180px;          
+    height: 20px;  
     color: white;        
-    padding: 6px;        
+    padding: 10px;        
     font: 14px Roboto;    
     background: black;  
     border: 0px;    

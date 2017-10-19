@@ -30,14 +30,16 @@ export default class Simple extends Component {
  
     var svgContainer = select(node);
 
-    var symbolGroups = 
+    var symbolg = 
       svgContainer
-      .selectAll('g')
-      .data(this.props.data)
+        .selectAll('g')
+        .data(this.props.data);
+
+    var enter = symbolg
       .enter()
       .append('g');
 
-    symbolGroups
+    enter
       .append('rect')
       .attr('width', d => d.width)
       .attr('height', d => d.height)
@@ -45,15 +47,19 @@ export default class Simple extends Component {
       .attr('y', d => d.y)
       .attr('fill', 'red');
 
-    symbolGroups
+    enter
       .append('rect')
+      .classed("pct", true)
       .attr('width', d => d.width * d.pct)
       .attr('height', d => d.height)
       .attr('x', d => d.x)
       .attr('y', d => d.y)
-      .attr('fill', 'limegreen'); 
+      .attr('fill', 'limegreen')
+      .merge(symbolg)
+      .select("rect.pct")
+      .attr('width', d => d.width * d.pct);
 
-    symbolGroups
+    enter 
       .append('text')
       .attr('text-anchor', 'middle')
       .attr('x', d => d.x + d.width / 2)
@@ -62,8 +68,9 @@ export default class Simple extends Component {
       .attr('fill', 'white')
       .text(d => d.name);
 
-    symbolGroups
+    enter
       .append('rect')
+      .classed("overlay", true)
       .attr('width', d => d.width)
       .attr('height', d => d.height)
       .attr('x', d => d.x)
@@ -75,8 +82,8 @@ export default class Simple extends Component {
          console.log(event);
          div.transition()    
 	   .duration(200)    
-	   .style("opacity", .7);    
-	 div.html(d.name + " [" + d.pct + "% open]")  
+	   .style("opacity", .9);    
+         div.html(d.name + " [" + (d.pct * 100).toFixed(1) + "% open]")
 	   .style("left", event.offsetX+ "px")    
 	   .style("top", event.offsetY+ "px");  
       })          
@@ -84,6 +91,16 @@ export default class Simple extends Component {
         div.transition()    
         .duration(500)    
         .style("opacity", 0);  
+      })
+      .merge(symbolg)
+      .select("rect.overlay")
+      .on("mouseover", function(d) {
+         div.transition()
+           .duration(200)
+           .style("opacity", .9);
+         div.html(d.name + " [" + (d.pct * 100).toFixed(1) + "% open]")
+           .style("left", event.offsetX+ "px")
+           .style("top", event.offsetY+ "px");
       });
 
 
@@ -120,7 +137,7 @@ export default class Simple extends Component {
         <div>
         <div style={{position:'relative', height: '500px', overflowY: 'scroll', width: '800px'}}>
 	  <svg ref={node => this.node = node} 
-	    style={{backgroundColor: 'blue'}} height="13600" width="800">
+	    style={{backgroundColor: 'black'}} height={this.props.height} width={this.props.width}>
 	  </svg>
           <div className="tooltip" style={{opacity: 0}}/>
         </div>
