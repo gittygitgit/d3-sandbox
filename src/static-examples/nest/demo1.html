@@ -34,34 +34,53 @@ function update(data) {
   var container = d3.select("svg");
 
   var g = container.selectAll("g").data(data);
-
   var rectpct = container.selectAll("g").selectAll("rect.pct").data(data);
 
-  g
+  enter = g
     .enter()
-    .append("g")
+    .append("g");
+
+  enter
+    .append("rect")
+    .attr("width", d => d.width)
+    .attr("height", d => d.height)
+    .attr("x", d => d.x)
+    .attr("y", d => d.y)
+    .attr('fill', 'red');
+
+  enter 
     .append("rect")
     .classed("pct", true)
     .attr("width", d => d.width * d.pct)
     .attr("height", d => d.height)
     .attr("x", d => d.x)
     .attr("y", d => d.y)
-    .attr('fill', 'yellow')
+    .attr('fill', 'limegreen')
     .merge(g)
-    .selectAll("rect.pct")
+    .select("rect.pct")
     .attr("width", d => d.width * d.pct);
-    
+  enter
+    .append("text")
+    .attr('text-anchor', 'middle')
+    .attr('x', d => d.x + d.width / 2)
+    .attr('y', d => d.y + d.height /2 + 4)
+    .attr('font-family', "Roboto")
+    .attr('fill', 'white')
+    .text(d => d.name);    
 }
  
 var body = d3.select("body").selectAll("p").data(matrix);
 body.enter().append("p").text(function(d, i) { return "hello" + i});
 
-symbols = [{x:0, y:0, width:48, height:48, pct:Math.random(),name: "AAPL"}];
-
-update(symbols);
- 
+shake(); 
 function shake() {
-  symbols = [{x:0, y:0, width:48, height:48, pct:Math.random(),name: "AAPL"}];
+  symbols = [
+              {x:0, y:0, width:48, height:48, pct:Math.random(),name: "AAPL"},
+              {x:52, y:0, width:48, height:48, pct:Math.random(),name: "AMD"},
+              {x:104, y:0, width:48, height:48, pct:Math.random(),name: "MO"},
+              {x:162, y:0, width:48, height:48, pct:Math.random(),name: "MSFT"},
+              {x:222, y:0, width:48, height:48, pct:Math.random(),name: "V"}
+            ];
   update(symbols);
     
 }
